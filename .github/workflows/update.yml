@@ -1,0 +1,112 @@
+name: "Update"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '00 20 * * *'
+
+jobs:
+  updater:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare packages
+        run: sudo apt-get install -y zstd zip grepcidr libarchive-tools whois dos2unix moreutils jq ipcalc ripgrep gawk parallel bind9-dnsutils language-pack-ru language-pack-en locales && sudo sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && sudo locale-gen --no-purge en_US.UTF-8
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('utils/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: |
+          pip install -r utils/requirements.txt
+
+
+      - name: Download IPs
+        env:
+          LANG: en_US.UTF-8
+          CHARSET: UTF-8
+        run: |
+          set -euo pipefail
+          set -x
+          find . -name downloader.sh| sort -h | awk '{print "Executing "$1"...";system("bash "$1)}'
+
+
+#      - name: Merge ipv4 Ranges
+#        run: |
+#          set -euo pipefail
+#          set -x
+#          find . -name ipv4.txt| sort -h | parallel --will-cite -j 1 echo "Merging '{}'"';'python utils/merge.py --source={} '|'  sort -h '>' {.}_merged.txt
+
+
+#      - name: Merge ipv6 Ranges
+#        run: |
+#          set -euo pipefail
+#          set -x
+#          find . -name ipv6.txt| sort -h | parallel --will-cite -j 1 echo "Merging '{}'"';'python utils/merge.py --source={} '|' sort -h '>' {.}_merged.txt
+
+
+      - name: Merge ipv4 Ranges Mat1RX script
+        env:
+          LANG: en_US.UTF-8
+          CHARSET: UTF-8
+        run: |
+          set -euo pipefail
+          set -x
+          find . -name ipv4.txt| sort -h | parallel --will-cite -j $(nproc) echo "Merging '{}'"';'python utils/merge_Mat1RX.py -c 1000000 --source={} '|'  sort -h '>' {.}_merged.txt
+
+
+      - name: Merge ipv6 Ranges Mat1RX script
+        env:
+          LANG: en_US.UTF-8
+          CHARSET: UTF-8
+        run: |
+          set -euo pipefail
+          set -x
+          find . -name ipv6.txt| sort -h | parallel --will-cite -j $(nproc) echo "Merging '{}'"';'python utils/merge_Mat1RX.py -c 1000000 --source={} '|' sort -h '>' {.}_merged.txt
+          rm -fv youtube/fullnets.txt youtube/nets.txt vpnhosts/vpnhosts-knownips.txt spotify/domains.txt
+
+      - name: Commit files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update ip ranges"
+          file_pattern: '*/*.txt */*/*.txt'
+          commit_options: "--no-verify"
+          repository: .
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+          commit_author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
+
+      - name: Delete temp files in tmp directory and delete all archives in repository
+        run: |
+          set -euo pipefail
+          find /tmp/ -maxdepth 1 -type f -name "*.txt" -delete && find . -type f -name "*.txt.zst" -delete
+
+      - name: Downloading iprange and unmerge ipranges
+        env:
+          LANG: en_US.UTF-8
+          CHARSET: UTF-8
+        run: |
+          find . -name unmerging.sh| sort -h | parallel --will-cite -j $(nproc) echo "Script running '{}'"';'bash {}
+
+      - name: Commit files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update IPs"
+          file_pattern: '*/*.txt.zst */*/*.txt.zst'
+          commit_options: "--no-verify"
+          repository: .
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+          commit_author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
