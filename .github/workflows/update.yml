@@ -15,12 +15,12 @@ jobs:
         run: sudo apt-get install -y zstd zip grepcidr libarchive-tools whois dos2unix moreutils jq ipcalc ripgrep gawk parallel bind9-dnsutils language-pack-ru language-pack-en locales && sudo sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && sudo locale-gen --no-purge en_US.UTF-8
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Cache pip
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('utils/requirements.txt') }}
