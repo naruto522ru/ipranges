@@ -8,7 +8,7 @@ apresolve.spotify.com
 encore.scdn.co
 gew1-spclient.spotify.com
 gew4-spclient.spotify.com
-#cdn.cookielaw.org
+cdn.cookielaw.org
 api-partner.spotify.com
 audio-fa.scdn.co
 gew1-dealer.spotify.com
@@ -27,7 +27,6 @@ seed-mix-image.spotifycdn.com
 thisis-images.scdn.co
 seeded-session-images.scdn.co
 newjams-images.scdn.co
-#In App Spotify
 api2.branch.io
 ap-gew4.spotify.com
 ap-gew1.spotify.com
