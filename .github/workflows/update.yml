@@ -75,7 +75,7 @@ jobs:
           set -euo pipefail
           set -x
           find . -name ipv6.txt| sort -h | parallel --will-cite -j $(nproc) echo "Merging '{}'"';'python utils/merge_Mat1RX.py -c 1000000 --source={} '|' sort -h '>' {.}_merged.txt
-          rm -fv youtube/fullnets.txt youtube/nets.txt vpnhosts/vpnhosts-knownips.txt spotify/domains.txt
+          rm -fv youtube/fullnets.txt youtube/nets.txt vpnhosts/vpnhosts-knownips.txt
 
       - name: Commit files
         uses: stefanzweifel/git-auto-commit-action@v5
