@@ -65,3 +65,31 @@ grep ':' /tmp/netblocks.txt >> /tmp/google-ipv6.txt
 # sort & uniq
 sort -h /tmp/google-ipv4.txt | uniq > google/ipv4.txt
 sort -h /tmp/google-ipv6.txt | uniq > google/ipv6.txt
+
+# get from Autonomous System
+get_routes() {
+    whois -h riswhois.ripe.net -- "-i origin $1" | rg '^route' | awk '{ print $2; }'
+    whois -h whois.radb.net -- "-i origin $1" | rg '^route' | awk '{ print $2; }'
+    whois -h rr.ntt.net -- "-i origin $1" | rg '^route' | awk '{ print $2; }'
+    whois -h whois.rogerstelecom.net -- "-i origin $1" | rg '^route' | awk '{ print $2; }'
+    whois -h whois.bgp.net.br -- "-i origin $1" | rg '^route' | awk '{ print $2; }'
+}
+
+get_routes 'AS36040' > /tmp/google_as.txt || echo 'failed'
+
+# save ipv4
+grep -v ':' /tmp/google_as.txt > /tmp/google_as-ipv4.txt
+
+# save ipv6
+grep ':' /tmp/google_as.txt > /tmp/google_as-ipv6.txt
+
+cat google/ipv4.txt /tmp/google_as-ipv4.txt | sort -h | uniq > /tmp/google_both_ipv4.txt
+
+rm -f google/ipv4.txt /tmp/google_as-ipv4.txt;
+
+# unmerging ipv4
+python utils/unmerge.py /tmp/google_both_ipv4.txt > /tmp/google_both_ipv4_unmerging.txt
+
+# sort & uniq unmerging
+sort -h -t. -k1,1n -k2,2n -k3,3n -k4,4n /tmp/google_both_ipv4_unmerging.txt | uniq > google/ipv4.txt
+
