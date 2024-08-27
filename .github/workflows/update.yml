@@ -77,6 +77,15 @@ jobs:
           find . -name ipv6.txt| sort -h | parallel --will-cite -j $(nproc) echo "Merging '{}'"';'python utils/merge_Mat1RX.py -c 1000000 --source={} '|' sort -h '>' {.}_merged.txt
           rm -fv youtube/fullnets.txt youtube/nets.txt vpnhosts/vpnhosts-knownips.txt
 
+      - name: Fix large file copy ipv4_merged.txt as ipv4.txt for Github fix
+        env:
+          LANG: en_US.UTF-8
+          CHARSET: UTF-8
+        run: |
+          set -euo pipefail
+          set -x
+          find . -name copy_as.sh| sort -h | parallel --will-cite -j $(nproc) echo "script execution '{}'"';' bash {.}.sh
+
       - name: Commit files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
