@@ -13,12 +13,7 @@ get_maintained() {
 	rg inetnum /tmp/ripe.txt |sort -h|uniq|awk '{print $2" "$4}'|python utils/ipcalc.py
 }
 
-
-
-
 get_maintained 'MNT-AVITO' > /tmp/avito.txt || echo 'failed'
-
-
 
 # save ipv4
 grep -v ':' /tmp/avito.txt > /tmp/avito-ipv4.txt
