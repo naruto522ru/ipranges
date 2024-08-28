@@ -87,8 +87,8 @@ cat google/ipv4.txt /tmp/google_as-ipv4.txt | sort -h | uniq > /tmp/google_both_
 
 rm -f google/ipv4.txt /tmp/google_as-ipv4.txt;
 
-# unmerging ipv4
-python utils/unmerge.py /tmp/google_both_ipv4.txt > /tmp/google_both_ipv4_unmerging.txt
+# unmerging ipv4 and exclude DNS address blocks,reserved IP subnet's
+python utils/unmerge.py /tmp/google_both_ipv4.txt | grepcidr -v '8.8.8.0/24' | grepcidr -v '8.8.4.0/24' | grepcidr -v '8.8.8.8/32' | grepcidr -v '8.8.4.4/32' | grepcidr -v '0.0.0.0/8' | grepcidr -v '0.0.0.0/32' | grepcidr -v '10.0.0.0/8' | grepcidr -v '100.64.0.0/10' | grepcidr -v '127.0.0.0/8' | grepcidr -v '169.254.0.0/16' | grepcidr -v '172.16.0.0/12' | grepcidr -v '192.0.0.0/24' | grepcidr -v '192.0.0.0/29' | grepcidr -v '192.0.0.170/32' | grepcidr -v '192.0.0.171/32' | grepcidr -v '192.0.2.0/24' | grepcidr -v '192.88.99.0/24' | grepcidr -v '192.88.99.1/32' | grepcidr -v '192.168.0.0/16' | grepcidr -v '198.51.100.0/24' | grepcidr -v '198.18.0.0/15' | grepcidr -v '203.0.113.0/24' | grepcidr -v '224.0.0.0/4' | grepcidr -v '240.0.0.0/4' | grepcidr -v '255.255.255.255/32' > /tmp/google_both_ipv4_unmerging.txt
 
 # sort & uniq unmerging
 sort -h -t. -k1,1n -k2,2n -k3,3n -k4,4n /tmp/google_both_ipv4_unmerging.txt | uniq > google/ipv4.txt
