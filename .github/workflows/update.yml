@@ -3,7 +3,7 @@ name: "Update"
 on:
   workflow_dispatch:
   schedule:
-    - cron: '50 19 * * *'
+    - cron: '30 19 * * *'
 
 jobs:
   updater:
