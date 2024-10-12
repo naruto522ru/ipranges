@@ -44,7 +44,7 @@ cat discord/domain.txt | utils/mdig-bolvan --threads=$(nproc) >> /tmp/discord_re
 # ip's
 rm -f /tmp/ips_discord.txt /tmp/voice_server1.txt /tmp/voice_server2.txt;
 curl --max-time 180 --retry-delay 3 --retry 10 -4s -# https://gist.githubusercontent.com/AndyIsHereBoi/bf57d7fa1661c82b4a7f5987e56420bf/raw/7ef7bc308d36bcd1ad5aff42de6c43c838873563/as%2520of%25209-2-2024 > /tmp/voice_server1.txt
-cat /tmp/voice_server1.txt | grep -vEe '(ip|city|region|country|org)' | sed 's/,//g' | sed 's/{//g' | sed 's/}//g' | sed 's/"//g' | sed 's/]//g' | sed 's/dns://g' | sed '/:\[/d' | sed 's/ //g'   | uniq | sort -u > /tmp/ips_discord.txt
+cat /tmp/voice_server1.txt | grep -vEe '(ip|city|region|country|org)' | sed 's/,//g' | sed 's/{//g' | sed 's/}//g' | sed 's/"//g' | sed 's/]//g' | sed 's/dns://g' | sed '/:\[/d' | sed 's/ //g' | uniq | sort -u > /tmp/ips_discord.txt
 curl --max-time 180 --retry-delay 3 --retry 10 -4s -# https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/master/discord-voice-ip-list > /tmp/voice_server2.txt
 #https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/discord-voice-ip-list
 cat /tmp/voice_server2.txt | uniq | sort -u >> /tmp/ips_discord.txt
