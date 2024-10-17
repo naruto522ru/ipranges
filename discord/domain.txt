@@ -1,3 +1,4 @@
+404:NotFound404:NotFound
 atlanta1068.discord.gg
 atlanta1212.discord.gg
 atlanta1271.discord.gg
@@ -521,9 +522,7 @@ discordmerch.com
 discord.new
 discordpartygames.com
 discordsays.com
-discordsez.com
 discordstatus.com
-discordstatus.comrussia1109.discord.gg
 discord.store
 discord.tools
 dis.gd
@@ -2204,7 +2203,6 @@ rotterdam2002.discord.gg
 rotterdam2054.discord.gg
 rotterdam2116.discord.gg
 rotterdam2119.discord.gg
-rotterdam2127.discord.gg
 rotterdam2258.discord.gg
 rotterdam2332.discord.gg
 rotterdam2414.discord.gg
@@ -2217,7 +2215,6 @@ rotterdam2710.discord.gg
 rotterdam2744.discord.gg
 rotterdam2775.discord.gg
 rotterdam2937.discord.gg
-rotterdam3036.discord.gg
 rotterdam3046.discord.gg
 rotterdam3065.discord.gg
 rotterdam3175.discord.gg
@@ -2245,8 +2242,6 @@ rotterdam4371.discord.gg
 rotterdam4421.discord.gg
 rotterdam4461.discord.gg
 rotterdam4476.discord.gg
-rotterdam4477.discord.gg
-rotterdam457.discord.gg
 rotterdam4617.discord.gg
 rotterdam464.discord.gg
 rotterdam4652.discord.gg
@@ -2274,7 +2269,6 @@ rotterdam5733.discord.gg
 rotterdam5737.discord.gg
 rotterdam5739.discord.gg
 rotterdam5745.discord.gg
-rotterdam5781.discord.gg
 rotterdam5819.discord.gg
 rotterdam5873.discord.gg
 rotterdam5957.discord.gg
@@ -2343,7 +2337,6 @@ rotterdam8620.discord.gg
 rotterdam8675.discord.gg
 rotterdam8738.discord.gg
 rotterdam8897.discord.gg
-rotterdam8949.discord.gg
 rotterdam8993.discord.gg
 rotterdam9022.discord.gg
 rotterdam9035.discord.gg
