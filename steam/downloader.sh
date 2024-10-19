@@ -14,15 +14,15 @@ get_routes() {
     whois -h whois.bgp.net.br -- "-i origin $1" | rg '^route' | awk '{ print $2; }'
 }
 
-get_routes 'AS32590' > /tmp/valve.txt || echo 'failed'
+get_routes 'AS32590' > /tmp/steam.txt || echo 'failed'
 
 # save ipv4
-grep -v ':' /tmp/valve.txt > /tmp/valve-ipv4.txt
+grep -v ':' /tmp/steam.txt > /tmp/steam-ipv4.txt
 
 # save ipv6
-grep ':' /tmp/valve.txt > /tmp/valve-ipv6.txt
+grep ':' /tmp/steam.txt > /tmp/steam-ipv6.txt
 
 
 # sort & uniq
-sort -h /tmp/valve-ipv4.txt | uniq > valve/ipv4.txt
-sort -h /tmp/valve-ipv6.txt | uniq > valve/ipv6.txt
+sort -h /tmp/steam-ipv4.txt | uniq > steam/ipv4.txt
+sort -h /tmp/steam-ipv6.txt | uniq > steam/ipv6.txt

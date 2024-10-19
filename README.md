@@ -1,6 +1,6 @@
 # IPRanges
 
-List all IP ranges from: Google, Bing, Amazon, Microsoft, Azure, Oracle, DigitalOcean, GitHub, Facebook, Twitter, Linode, Yandex, Vkontakte, Telegram, Netflix, Valve, Spotify, ChatGPT, YouTube, Discord with regular auto-updates.
+List all IP ranges from: Google, Bing, Amazon, Microsoft, Azure, Oracle, DigitalOcean, GitHub, Facebook, Twitter, Linode, Yandex, Vkontakte, Telegram, Netflix, Steam, Spotify, ChatGPT, YouTube, Discord with regular auto-updates.
 
 All lists are obtained from public sources.
 

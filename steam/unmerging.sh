@@ -9,7 +9,7 @@ curl --max-time 30 --retry-delay 3 --retry 10 -4s -# https://raw.githubuserconte
 curl --max-time 30 --retry-delay 3 --retry 10 -4s -# https://raw.githubusercontent.com/naruto522ru/ipranges/main/"$1"/ipv6.txt >> /tmp/"$1".txt
 }
 
-name_list=valve
+name_list=steam
 
 get_prefix "$name_list" || echo 'failed'
 
