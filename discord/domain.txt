@@ -3234,6 +3234,7 @@ south-korea1126.discord.gg
 south-korea1127.discord.gg
 south-korea1128.discord.gg
 south-korea1129.discord.gg
+stable.dl2.discordapp.net
 stage-scale10000.discord.gg
 stage-scale10001.discord.gg
 stage-scale10002.discord.gg
