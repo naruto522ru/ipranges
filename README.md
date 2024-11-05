@@ -19,6 +19,8 @@ All lists are obtained from public sources.
 curl -4 --retry 3 -s https://raw.githubusercontent.com/naruto522ru/ipranges/main/SERVICE_NAME/ipv4.txt.zst | zstd -d | sort -t. -k1,1n -k2,2n -k3,3n -k4,4n > filename.txt
 DIR: ORI
 curl -4 --retry 3 -s https://raw.githubusercontent.com/naruto522ru/ipranges/refs/heads/main/ORI/ISP,GOV etc.../ipv4.txt.zst | zstd -d | sort -t. -k1,1n -k2,2n -k3,3n -k4,4n > filename.txt
+DIR: banki
+curl -4 --retry 3 -s https://raw.githubusercontent.com/naruto522ru/ipranges/refs/heads/main/banki/BANK/ipv4.txt.zst | zstd -d | sort -t. -k1,1n -k2,2n -k3,3n -k4,4n > filename.txt
 ```
 
 #### with wget:
@@ -26,6 +28,8 @@ curl -4 --retry 3 -s https://raw.githubusercontent.com/naruto522ru/ipranges/refs
 wget -4 -t 3 -qO - https://raw.githubusercontent.com/naruto522ru/ipranges/main/SERVICE_NAME/ipv4.txt.zst | zstd -d | sort -t. -k1,1n -k2,2n -k3,3n -k4,4n > filename.txt
 DIR: ORI
 wget -4 -t 3 -qO - https://raw.githubusercontent.com/naruto522ru/ipranges/refs/heads/main/ORI/ISP,GOV etc.../ipv4.txt.zst | zstd -d | sort -t. -k1,1n -k2,2n -k3,3n -k4,4n > filename.txt
+DIR: banki
+wget -4 -t 3 -qO - https://raw.githubusercontent.com/naruto522ru/ipranges/refs/heads/main/banki/BANK/ipv4.txt.zst | zstd -d | sort -t. -k1,1n -k2,2n -k3,3n -k4,4n > filename.txt
 ```
 
 ## See also repository:
