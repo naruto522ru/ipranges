@@ -1,0 +1,142 @@
+name: "Update"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 19 * * *'
+
+jobs:
+  updater:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Settings DoT DNS with systemd-resolved
+        run: |
+         sudo apt update
+         sudo apt install -y bind9-dnsutils sudo --no-install-suggests
+         sudo mkdir -pv /etc/systemd/resolved.conf.d/
+         echo -e "[Resolve]\nDNS=8.8.4.4#dns.google\nFallbackDNS=\nDNSOverTLS=yes\nDNSSEC=yes\nCache=yes\nCacheFromLocalhost=yes\nReadEtcHosts=no" | sudo tee /etc/systemd/resolved.conf.d/google.conf &>/dev/null;
+         echo -e "[Resolve]\nDNS=1.0.0.1#1dot1dot1dot1.cloudflare-dns.com\nFallbackDNS=\nDNSOverTLS=yes\nDNSSEC=yes\nCache=yes\nCacheFromLocalhost=yes\nReadEtcHosts=no" | sudo tee /etc/systemd/resolved.conf.d/cloudflare.conf &>/dev/null;
+         cat /etc/systemd/resolved.conf.d/google.conf
+         echo ""
+         cat /etc/systemd/resolved.conf.d/cloudflare.conf
+         echo ""
+         echo "nameserver 127.0.0.53" | sudo tee /etc/resolv.conf.DNSoverride &>/dev/null;
+         sudo ln -svf /etc/resolv.conf.DNSoverride /etc/resolv.conf
+         cat -n /etc/resolv.conf
+         echo ""
+         cat -n /etc/hosts
+         echo ""
+         sudo systemctl restart systemd-resolved.service
+         sleep 3s
+         nc -z -v 127.0.0.53 53 && echo ""
+
+      - name: Prepare packages
+        run: sudo apt-get install -y zstd zip grepcidr libarchive-tools whois dos2unix moreutils jq ipcalc ripgrep gawk parallel bind9-dnsutils language-pack-ru language-pack-en locales && sudo sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && sudo locale-gen --no-purge en_US.UTF-8
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('utils/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: |
+          pip install -r utils/requirements.txt
+
+
+      - name: Download IPs
+        env:
+          LANG: en_US.UTF-8
+          CHARSET: UTF-8
+        run: |
+          set -euo pipefail
+          set -x
+          find . -name downloader.sh| sort -h | awk '{print "Executing "$1"...";system("bash "$1)}'
+
+
+#      - name: Merge ipv4 Ranges
+#        run: |
+#          set -euo pipefail
+#          set -x
+#          find . -name ipv4.txt| sort -h | parallel --will-cite -j 1 echo "Merging '{}'"';'python utils/merge.py --source={} '|'  sort -h '>' {.}_merged.txt
+
+
+#      - name: Merge ipv6 Ranges
+#        run: |
+#          set -euo pipefail
+#          set -x
+#          find . -name ipv6.txt| sort -h | parallel --will-cite -j 1 echo "Merging '{}'"';'python utils/merge.py --source={} '|' sort -h '>' {.}_merged.txt
+
+
+      - name: Merge ipv4 Ranges Mat1RX script
+        env:
+          LANG: en_US.UTF-8
+          CHARSET: UTF-8
+        run: |
+          set -euo pipefail
+          set -x
+          find . -name ipv4.txt| sort -h | parallel --will-cite -j $(nproc) echo "Merging '{}'"';'python utils/merge_Mat1RX.py -c 1000000 --source={} '|'  sort -h '>' {.}_merged.txt
+
+
+      - name: Merge ipv6 Ranges Mat1RX script
+        env:
+          LANG: en_US.UTF-8
+          CHARSET: UTF-8
+        run: |
+          set -euo pipefail
+          set -x
+          find . -name ipv6.txt| sort -h | parallel --will-cite -j $(nproc) echo "Merging '{}'"';'python utils/merge_Mat1RX.py -c 1000000 --source={} '|' sort -h '>' {.}_merged.txt
+          rm -fv youtube/fullnets.txt youtube/nets.txt vpnhosts/vpnhosts-knownips.txt
+
+      - name: Fix large file copy ipv4_merged.txt as ipv4.txt for Github fix
+        env:
+          LANG: en_US.UTF-8
+          CHARSET: UTF-8
+        run: |
+          set -euo pipefail
+          set -x
+          find . -name copy_as.sh| sort -h | parallel --will-cite -j $(nproc) echo "script execution '{}'"';' bash {.}.sh
+
+      - name: Commit files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update ip ranges"
+          file_pattern: '*/*.txt */*/*.txt'
+          commit_options: "--no-verify"
+          repository: .
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+          commit_author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
+
+      - name: Delete temp files in tmp directory and delete all archives in repository
+        run: |
+          set -euo pipefail
+          find /tmp/ -maxdepth 1 -type f -name "*.txt" -delete && find . -type f -name "*.txt.zst" -delete
+
+      - name: Downloading iprange and unmerge ipranges
+        env:
+          LANG: en_US.UTF-8
+          CHARSET: UTF-8
+        run: |
+          find . -name unmerging.sh| sort -h | parallel --will-cite -j $(nproc) echo "Script running '{}'"';'bash {}
+
+      - name: Commit files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update IPs"
+          file_pattern: '*/*.txt.zst */*/*.txt.zst'
+          commit_options: "--no-verify"
+          repository: .
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+          commit_author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
