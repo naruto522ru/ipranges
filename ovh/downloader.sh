@@ -22,10 +22,9 @@ get_routes() {
     whois -h whois.bgp.net.br -- "-i origin $1" | rg '^route' | awk '{ print $2; }'
 }
 
-get_routes 'AS16276' > /tmp/ovh.txt || echo 'failed'
+get_maintained 'OVH-MNT' > /tmp/ovh.txt || echo 'failed'
+get_routes 'AS16276' >> /tmp/ovh.txt || echo 'failed'
 get_routes 'AS35540' >> /tmp/ovh.txt || echo 'failed'
-
-get_maintained 'OVH-MNT' >> /tmp/ovh.txt || echo 'failed'
 
 # save ipv4
 grep -v ':' /tmp/ovh.txt | grep -v "0.0.0.0" > /tmp/ovh-ipv4.txt
