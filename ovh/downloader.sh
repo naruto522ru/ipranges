@@ -27,7 +27,7 @@ get_routes 'AS16276' >> /tmp/ovh.txt || echo 'failed'
 get_routes 'AS35540' >> /tmp/ovh.txt || echo 'failed'
 
 # save ipv4
-grep -v ':' /tmp/ovh.txt | grep -v "0.0.0.0" > /tmp/ovh-ipv4.txt
+grep -v ':' /tmp/ovh.txt | grep -v "0.0.0.0" | grep "/" > /tmp/ovh-ipv4.txt
 
 # save ipv6
 grep ':' /tmp/ovh.txt > /tmp/ovh-ipv6.txt
