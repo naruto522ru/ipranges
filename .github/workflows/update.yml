@@ -85,7 +85,7 @@ jobs:
         run: |
           set -euo pipefail
           set -x
-          find . -name ipv4.txt| sort -h | parallel --will-cite -j $(nproc) echo "Merging '{}'"';'python utils/merge_Mat1RX.py -c 1000000 --source={} '|'  sort -h '>' {.}_merged.txt
+          find . -type f -name ipv4.txt| sort -h | parallel --will-cite -j $(nproc) echo "Merging '{}'"';'python utils/merge_Mat1RX.py -c 1000000 --source={} '|'  sort -h '>' {.}_merged.txt
 
 
       - name: Merge ipv6 Ranges Mat1RX script
@@ -95,7 +95,7 @@ jobs:
         run: |
           set -euo pipefail
           set -x
-          find . -name ipv6.txt| sort -h | parallel --will-cite -j $(nproc) echo "Merging '{}'"';'python utils/merge_Mat1RX.py -c 1000000 --source={} '|' sort -h '>' {.}_merged.txt
+          find . -type f -name ipv6.txt| sort -h | parallel --will-cite -j $(nproc) echo "Merging '{}'"';'python utils/merge_Mat1RX.py -c 1000000 --source={} '|' sort -h '>' {.}_merged.txt
           rm -fv youtube/fullnets.txt youtube/nets.txt vpnhosts/vpnhosts-knownips.txt
 
       - name: Fix large file copy ipv4_merged.txt as ipv4.txt for Github fix
@@ -112,10 +112,8 @@ jobs:
           LANG: en_US.UTF-8
           CHARSET: UTF-8
         run: |
-          set -euo pipefail
-          set -x
           for filename in $(find . -type f -name "ipv4*.txt" -print | sort -t . | uniq); do if [[ -s ${filename} ]]; then echo "No empty $filename";else echo -e "\e[1;33mEmpty\033[0m $filename" && export EMPTY=1; fi; done
-          if [[ $EMPTY == 1 ]]; then exit 1; else exit 0; fi
+          if [[ $EMPTY == 1 ]]; then exit 1; else echo "OK!"; fi
 
       - name: Commit files
         uses: stefanzweifel/git-auto-commit-action@v5
