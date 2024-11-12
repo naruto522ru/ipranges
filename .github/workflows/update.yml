@@ -107,6 +107,16 @@ jobs:
           set -x
           find . -name copy_as.sh| sort -h | parallel --will-cite -j $(nproc) echo "script execution '{}'"';' bash {.}.sh
 
+      - name: Protection against empty files. If one such file is found, no changes will be committed to the repository. Finishing with code 1. Error code for the repository author.
+        env:
+          LANG: en_US.UTF-8
+          CHARSET: UTF-8
+        run: |
+          set -euo pipefail
+          set -x
+          for filename in $(find . -type f -name "ipv4*.txt" -print | sort -t . | uniq); do if [[ -s ${PATH_DOWNLOAD}${filename} ]]; then echo "No empty $filename";else echo -e "\e[1;33mEmpty\033[0m $filename" && export EMPTY=1; fi; done
+          if [[ $EMPTY == 1 ]]; then exit 1; else exit 0; fi
+
       - name: Commit files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
