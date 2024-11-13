@@ -12,7 +12,7 @@ All lists are obtained from public sources.
 
 `ipv4.txt.zst` - compressed unmerged IPv4 address list by zst algorithm
 
-## How get list unmerged on devices:
+## How get list unmerged on devices (Only IPv4 address):
 
 #### with curl:
 ```bash
