@@ -503,6 +503,7 @@ buenos-aires9180.discord.gg
 buenos-aires9315.discord.gg
 buenos-aires9432.discord.gg
 buenos-aires9775.discord.gg
+canary.discord.com
 cdn.discordapp.com
 discord-activities.com
 discordactivities.com
@@ -1187,6 +1188,8 @@ hongkong11199.discord.gg
 hongkong11200.discord.gg
 hongkong11201.discord.gg
 hongkong11202.discord.gg
+images-ext-1.discordapp.net
+images-ext-2.discordapp.net
 india10000.discord.gg
 india10001.discord.gg
 india10002.discord.gg
@@ -1701,6 +1704,7 @@ madrid9168.discord.gg
 madrid9635.discord.gg
 madrid9811.discord.gg
 madrid9918.discord.gg
+media.discordapp.net
 milan10000.discord.gg
 milan10001.discord.gg
 milan10002.discord.gg
@@ -1999,6 +2003,7 @@ newark9858.discord.gg
 newark9866.discord.gg
 newark9960.discord.gg
 newark9985.discord.gg
+ptb.discord.com
 rotterdam1032.discord.gg
 rotterdam1060.discord.gg
 rotterdam1069.discord.gg
