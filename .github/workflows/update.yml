@@ -149,18 +149,18 @@ jobs:
           commit_user_email: github-actions[bot]@users.noreply.github.com
           commit_author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
 
-      - name: Merge ipv4 Ranges Smart utils ip2net
+      - name: Merge ipv4 Ranges smart with utils ip2net
         env:
           THRESHOLDv4: 1/4
           IP2NET_PREFIX_LENGTH: 16-26
         run: |
           find . -type f -name ipv4.txt.zst| sort -h | parallel --will-cite -j $(nproc) echo "Merging Smart list '{}'"';'zstdcat {} '|' utils/ip2net --v4-threshold=${THRESHOLDv4} --prefix-length=${IP2NET_PREFIX_LENGTH} '|' sort -h '>' {.}_smart.txt
 
-      - name: Fix naming files
+      - name: Fix naming files smart list
         run: |
           find . -type f -name "*.txt_smart.txt" -exec bash -c 'mv -v "$0" "${0%.txt_smart.txt}_smart.txt"' {} \;
 
-      - name: Protection against empty files. If one such file is found, no changes will be committed to the repository. Finishing with code 1. Error code for the repository author.
+      - name: Protection against empty files (smart list). If one such file is found, no changes will be committed to the repository. Finishing with code 1. Error code for the repository author.
         env:
           LANG: en_US.UTF-8
           CHARSET: UTF-8
