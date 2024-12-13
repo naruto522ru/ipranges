@@ -151,8 +151,8 @@ jobs:
 
       - name: Merge ipv4 Ranges smart with utils ip2net
         env:
-          THRESHOLDv4: 3/4
-          IP2NET_PREFIX_LENGTH: 22-30
+          THRESHOLDv4: 1/4
+          IP2NET_PREFIX_LENGTH: 16-26
         run: |
           find . -type f -name ipv4.txt.zst| sort -h | parallel --will-cite -j $(nproc) echo "Merging Smart list '{}'"';'zstdcat {} '|' utils/ip2net --v4-threshold=${THRESHOLDv4} --prefix-length=${IP2NET_PREFIX_LENGTH} '|' sort -h '>' {.}_smart.txt
 
