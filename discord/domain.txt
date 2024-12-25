@@ -393,6 +393,7 @@ bucharest1272.discord.gg
 bucharest1367.discord.gg
 bucharest146.discord.gg
 bucharest1590.discord.gg
+bucharest1654.discord.gg
 bucharest1729.discord.gg
 bucharest1832.discord.gg
 bucharest1838.discord.gg
@@ -2194,6 +2195,8 @@ rotterdam114.discord.gg
 rotterdam1160.discord.gg
 rotterdam1192.discord.gg
 rotterdam1197.discord.gg
+rotterdam12010.discord.gg
+rotterdam12020.discord.gg
 rotterdam1221.discord.gg
 rotterdam1225.discord.gg
 rotterdam1334.discord.gg
