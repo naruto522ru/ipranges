@@ -50,6 +50,7 @@ community.akamai.steamstatic.com
 community.cloudflare.steamstatic.com
 community.steamstatic.com
 crash.steampowered.com
+cs.steampowered.com
 eu.http.ipv6check.akadns.net
 eu.udp.ipv6check.akadns.net
 ext1-eze1.steamserver.net
@@ -71,6 +72,10 @@ ext2-waw1.steamserver.net
 ext3-sto1.steamserver.net
 ext3-sto2.steamserver.net
 ext4-tyo3.steamserver.net
+gds1.steampowered.com
+gds2.steampowered.com
+gds3.steampowered.com
+gds4.steampowered.com
 help.steampowered.com
 http.ipv6check.akadns.net
 ipv6check-http.steamserver.net
@@ -82,8 +87,8 @@ redirector.gvt1.com
 shared.akamai.steamstatic.com
 shared.fastly.steamstatic.com
 shared.steamstatic.com
-steam-chat.com
 steamcdn-a.akamaihd.net
+steam-chat.com
 steamcloud-eu-ams.storage.googleapis.com
 steamcloud-eu-fra.storage.googleapis.com
 steamcommunity-a.akamaihd.net
@@ -93,6 +98,7 @@ steamuserimages-a.akamaihd.net
 store.akamai.steamstatic.com
 store.steampowered.com
 store.steamstatic.com
-t.sni.global.fastly.net
+support.steampowered.com
 test.steampowered.com
+t.sni.global.fastly.net
 udp.ipv6check.akadns.net
