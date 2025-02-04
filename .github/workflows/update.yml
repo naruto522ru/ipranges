@@ -58,6 +58,7 @@ jobs:
         env:
           LANG: en_US.UTF-8
           CHARSET: UTF-8
+          NAME_ACCOUNT_GITHUB: naruto522ru
         run: |
           set -euo pipefail
           set -x
@@ -102,6 +103,7 @@ jobs:
         env:
           LANG: en_US.UTF-8
           CHARSET: UTF-8
+          NAME_ACCOUNT_GITHUB: naruto522ru
         run: |
           set -euo pipefail
           set -x
@@ -135,6 +137,7 @@ jobs:
         env:
           LANG: en_US.UTF-8
           CHARSET: UTF-8
+          NAME_ACCOUNT_GITHUB: naruto522ru
         run: |
           find . -name unmerging.sh| sort -h | parallel --will-cite -j $(nproc) echo "Script running '{}'"';'bash {}
 
