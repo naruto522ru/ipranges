@@ -22,6 +22,7 @@ cache6-fra2.steamcontent.com
 cdn.akamai.steamstatic.com
 cdn.fastly.steamstatic.com
 cdn.steamstatic.com
+client-update.fastly.steamstatic.com
 clan.fastly.steamstatic.com
 clan.steamstatic.com
 clientconfig.akamai.steamstatic.com
